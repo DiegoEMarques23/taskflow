@@ -25,7 +25,45 @@
     </nav>
   </header>
 
-  <main></main>
+  <main>
+    <section id="cadastro" aria-labelledby="titulo-cadastro">
+      <h2 id="titulo-cadastro">Nova tarefa</h2>
+      <form action="#" method="post">
+        <div class="campo">
+          <label for="titulo">Título</label>
+          <input type="text" id="titulo" name="titulo" placeholder="Ex.: Entregar relatório" required>
+        </div>
+        <div class="campo">
+          <label for="descricao">Descrição</label>
+          <textarea id="descricao" name="descricao" rows="3" placeholder="Detalhes da tarefa"></textarea>
+        </div>
+        <div class="campo">
+          <label for="prioridade">Prioridade</label>
+          <select id="prioridade" name="prioridade">
+            <option value="baixa">Baixa</option>
+            <option value="media" selected>Média</option>
+            <option value="alta">Alta</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="prazo">Prazo</label>
+          <input type="date" id="prazo" name="prazo">
+        </div>
+        <div class="campo">
+          <label for="status">Status</label>
+          <select id="status" name="status">
+            <option value="a-fazer" selected>A fazer</option>
+            <option value="em-andamento">Em andamento</option>
+            <option value="concluida">Concluída</option>
+          </select>
+        </div>
+        <div class="acoes">
+          <button type="submit">Salvar tarefa</button>
+          <button type="reset">Limpar campos</button>
+        </div>
+      </form>
+    </section>
+  </main>
   <footer>
     <p>Task Flow — Gerenciador de tarefas</p>
   </footer>
