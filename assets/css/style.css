@@ -1,0 +1,108 @@
+:root {
+  --fundo: #eef2f4;
+  --superficie: #ffffff;
+  --texto: #1d2a33;
+  --suave: #55656f;
+  --primaria: #1f5f8b;
+  --borda: #cdd8de;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  line-height: 1.5;
+  color: var(--texto);
+  background: var(--fundo);
+}
+
+.topo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: var(--primaria);
+  color: #fff;
+}
+.marca { display: flex; gap: .75rem; align-items: center; }
+.marca h1 { margin: 0; font-size: 1.6rem; }
+.marca p { margin: 0; font-size: .9rem; opacity: .9; }
+
+nav ul { display: flex; flex-wrap: wrap; gap: 1rem; margin: 0; padding: 0; list-style: none; }
+nav a { color: #fff; padding: .25rem 0; }
+
+main {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+section, aside {
+  padding: 1.25rem;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+}
+h2 { margin-top: 0; }
+
+.campo { display: flex; flex-direction: column; gap: .25rem; margin-bottom: .9rem; }
+label { font-weight: 600; }
+input, select, textarea {
+  padding: .5rem;
+  font: inherit;
+  border: 1px solid var(--borda);
+  border-radius: 4px;
+}
+
+button {
+  padding: .45rem .9rem;
+  font: inherit;
+  color: #fff;
+  background: var(--primaria);
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button[type="reset"] { color: var(--texto); background: var(--borda); }
+:focus-visible { outline: 3px solid #e0a100; outline-offset: 2px; }
+
+.acoes { display: flex; flex-wrap: wrap; gap: .5rem; }
+
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  margin-bottom: 1.25rem;
+}
+.barra .campo { margin-bottom: 0; }
+
+.colunas {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.colunas > section { background: var(--fundo); }
+.colunas h3 { margin-top: 0; }
+
+.cartao {
+  margin-bottom: .75rem;
+  padding: .9rem;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+}
+.cartao h4 { margin: 0 0 .5rem; }
+.cartao ul { margin: 0 0 .75rem; padding-left: 1.1rem; color: var(--suave); }
+
+table { width: 100%; margin-bottom: 1rem; border-collapse: collapse; }
+caption { margin-bottom: .5rem; text-align: left; color: var(--suave); }
+th, td { padding: .5rem; text-align: left; border-bottom: 1px solid var(--borda); }
+th { width: 30%; }
+
+footer { padding: 1.5rem; text-align: center; color: var(--suave); }
