@@ -92,6 +92,7 @@ input:user-invalid, select:user-invalid, textarea:user-invalid {
 }
 
 button {
+   min-height: 2.5rem;
   padding: .45rem .9rem;
   font: inherit;
   color: #fff;
@@ -99,10 +100,24 @@ button {
   border: 0;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color .15s;
 }
-button[type="reset"] { color: var(--texto); background: var(--borda); }
-:focus-visible { outline: 3px solid #e0a100; outline-offset: 2px; }
 
+button:hover { background: var(--primaria-escura); }
+button:active { transform: translateY(1px); }
+button:disabled { opacity: .5; cursor: not-allowed; }
+
+button[type="reset"]  {color: var(--texto); background: var(--borda);}
+button[type="reset"]:hover { background: #b9c8d0; }
+
+.cartao .acoes button:last-child,
+aside .acoes button:last-child { background: var(--perigo); }
+.cartao .acoes button:last-child:hover,
+aside .acoes button:last-child:hover { background: var(--perigo-escura); }
+
+:focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; }
+.topo :focus-visible { outline-color: var(--foco-topo); }
+ 
 .acoes { display: flex; flex-wrap: wrap; gap: .5rem; }
 
 .barra {
