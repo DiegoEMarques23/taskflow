@@ -4,7 +4,13 @@
   --texto: #1d2a33;
   --suave: #55656f;
   --primaria: #1f5f8b;
+  --primaria-escura: #174a6d;
   --borda: #cdd8de;
+  --borda-campo: #7b8e99;
+  --foco: #0b3d5c;
+  --foco-topo: #ffd54a;
+  --perigo: #b3261e;
+  --perigo-escura: #8c1d18;
 }
 
 * { box-sizing: border-box; }
