@@ -163,6 +163,26 @@ aside .acoes button:last-child:hover { background: var(--perigo-escura); }
 .prioridade--media { background: #fff4d6; color: #6b4a00; }
 .prioridade--baixa { background: #e6f4ea; color: #14532d; }
 
+
+.mensagem {
+  margin: 0 0 1rem;
+  padding: .75rem 1rem;
+  border-left: 4px solid;
+  border-radius: 6px;
+}
+.mensagem--sucesso { background: #e6f4ea; border-color: #1e7e34; color: #14532d; }
+.mensagem--erro { background: #fdecea; border-color: var(--perigo); color: #7a1712; }
+.mensagem--info { background: #e8f1f8; border-color: var(--primaria); color: #0b3d5c; }
+
+.vazio {
+  padding: 1rem;
+  text-align: center;
+  color: var(--suave);
+  border: 1px dashed var(--borda-campo);
+  border-radius: 6px;
+}
+
+
 table { width: 100%; margin-bottom: 1rem; border-collapse: collapse; }
 caption { margin-bottom: .5rem; text-align: left; color: var(--suave); }
 th, td { padding: .5rem; text-align: left; border-bottom: 1px solid var(--borda); }
