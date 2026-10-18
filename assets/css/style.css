@@ -41,11 +41,18 @@ img { max-width: 100%; height: auto; }
 .marca p { margin: 0; font-size: .9rem; opacity: .9; }
 
 nav ul { display: flex; flex-wrap: wrap; gap: 1rem; margin: 0; padding: 0; list-style: none; }
-nav a { color: #fff; padding: .25rem 0; }
+nav a {  display: inline-block;
+  padding: .5rem .25rem;
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-color .15s; }
+nav a:hover, nav a:focus { border-color: #fff; }
 
 main {
   display: grid;
   gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr);
   max-width: 1200px;
   margin: 1.5rem auto;
   padding: 0 1rem;
