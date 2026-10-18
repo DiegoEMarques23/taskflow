@@ -69,10 +69,26 @@ h2 { margin-top: 0; }
 .campo { display: flex; flex-direction: column; gap: .25rem; margin-bottom: .9rem; }
 label { font-weight: 600; }
 input, select, textarea {
-  padding: .5rem;
+ padding: .5rem;
   font: inherit;
-  border: 1px solid var(--borda);
+  color: inherit;
+  background: #fff;
+  border: 1px solid var(--borda-campo);
   border-radius: 4px;
+  transition: border-color .15s, box-shadow .15s;
+}
+textarea { resize: vertical;}
+::placeholder { color: var(--suave); opacity: 1; }
+
+input:hover, select:hover, textarea:hover { border-color: var(--primaria); }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primaria);
+  box-shadow: 0 0 0 3px rgba(31, 95, 139, .2);
+}
+
+input:user-invalid, select:user-invalid, textarea:user-invalid {
+  border-color: var(--perigo);
+  background: #fff8f7;
 }
 
 button {
