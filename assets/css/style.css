@@ -14,6 +14,7 @@
 }
 
 * { box-sizing: border-box; }
+html { scroll-padding-top: 1rem; }
 
 body {
   margin: 0;
@@ -22,6 +23,8 @@ body {
   color: var(--texto);
   background: var(--fundo);
 }
+
+img { max-width: 100%; height: auto; }
 
 .topo {
   display: flex;
