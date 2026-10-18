@@ -185,7 +185,37 @@ aside .acoes button:last-child:hover { background: var(--perigo-escura); }
 
 table { width: 100%; margin-bottom: 1rem; border-collapse: collapse; }
 caption { margin-bottom: .5rem; text-align: left; color: var(--suave); }
-th, td { padding: .5rem; text-align: left; border-bottom: 1px solid var(--borda); }
+th, td { padding: .5rem; text-align: left; border-bottom: 1px solid var(--borda); overflow-wrap: anywhere; }
 th { width: 30%; }
 
 footer { padding: 1.5rem; text-align: center; color: var(--suave); }
+
+@media (max-width: 600px) {
+  .topo { flex-direction: column; align-items: flex-start; padding: 1rem; }
+  .marca h1 { font-size: 1.3rem; }
+  section, aside { padding: 1rem; }
+
+  .barra { flex-direction: column; align-items: stretch; }
+  .barra button { width: 100%; }
+  .acoes button { flex: 1 1 auto; }
+
+  th, td { display: block; width: 100%; }
+  th { padding-bottom: 0; border-bottom: 0; }
+}
+
+@media (min-width: 1000px) {
+  main {
+    grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
+    align-items: start;
+  }
+  #cadastro { grid-column: 1; grid-row: 1 / span 2; }
+  #quadro { grid-column: 2; grid-row: 1; }
+  #detalhes { grid-column: 2; grid-row: 2; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
