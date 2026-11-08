@@ -86,3 +86,79 @@ function renderizar() {
 }
 
 renderizar();
+
+
+// ----- Cadastro -----
+const form = document.getElementById('form-tarefa');
+const campoTitulo = document.getElementById('titulo');
+const campoDescricao = document.getElementById('descricao');
+const campoPrioridade = document.getElementById('prioridade');
+const campoPrazo = document.getElementById('prazo');
+const campoStatus = document.getElementById('status');
+const caixaMensagem = document.getElementById('mensagem');
+let temporizadorMensagem;
+
+// Funções executadas sempre que os dados mudam (ex.: salvar no localStorage)
+const aoAlterarDados = [];
+
+function notificarAlteracao() {
+  aoAlterarDados.forEach((funcao) => funcao());
+  renderizar();
+}
+
+function mostrarMensagem(texto, tipo) {
+  caixaMensagem.textContent = texto;
+  caixaMensagem.className = `mensagem mensagem--${tipo}`;
+  caixaMensagem.hidden = false;
+  clearTimeout(temporizadorMensagem);
+  temporizadorMensagem = setTimeout(() => {
+    caixaMensagem.hidden = true;
+  }, 4000);
+}
+
+function lerFormulario() {
+  return {
+    titulo: campoTitulo.value.trim(),
+    descricao: campoDescricao.value.trim(),
+    prioridade: campoPrioridade.value,
+    prazo: campoPrazo.value,
+    status: campoStatus.value,
+  };
+}
+
+function validar(dados) {
+  if (dados.titulo.length < 3) {
+    return 'Informe um título com pelo menos 3 caracteres.';
+  }
+  return '';
+}
+
+function gerarId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+}
+
+function criarTarefa(dados) {
+  tarefas.push({ id: gerarId(), ...dados });
+  return 'Tarefa salva com sucesso!';
+}
+
+// O que o formulário faz ao ser enviado: criar uma tarefa (a edição troca isso depois)
+let acaoDoFormulario = criarTarefa;
+
+function tratarEnvio(evento) {
+  evento.preventDefault();
+  const dados = lerFormulario();
+  const erro = validar(dados);
+  if (erro) {
+    mostrarMensagem(erro, 'erro');
+    campoTitulo.focus();
+    return;
+  }
+
+  const texto = acaoDoFormulario(dados);
+  notificarAlteracao();
+  form.reset();
+  mostrarMensagem(texto, 'sucesso');
+}
+
+form.addEventListener('submit', tratarEnvio);
