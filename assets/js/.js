@@ -281,3 +281,21 @@ acoesDosCartoes.editar = iniciarEdicao;
 document.getElementById('det-editar').addEventListener('click', () => {
   if (detalheId) iniciarEdicao(detalheId);
 });
+
+
+// ----- Exclusão -----
+function excluirTarefa(id) {
+  const tarefa = tarefas.find((item) => item.id === id);
+  if (!tarefa) return;
+  if (!confirm(`Excluir a tarefa "${tarefa.titulo}"?`)) return;
+
+  tarefas = tarefas.filter((item) => item.id !== id);
+  if (editandoId === id) form.reset();
+  notificarAlteracao();
+  mostrarMensagem('Tarefa excluída.', 'info');
+}
+
+acoesDosCartoes.excluir = excluirTarefa;
+document.getElementById('det-excluir').addEventListener('click', () => {
+  if (detalheId) excluirTarefa(detalheId);
+});
