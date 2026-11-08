@@ -219,3 +219,5 @@ footer { padding: 1.5rem; text-align: center; color: var(--suave); }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+
+[hidden] { display: none !important; }

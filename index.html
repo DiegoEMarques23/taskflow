@@ -29,8 +29,8 @@
   <main>
     <section id="cadastro" aria-labelledby="titulo-cadastro">
       <h2 id="titulo-cadastro">Nova tarefa</h2>
-      <p class ="mensagem mensagem--sucesso" role="status">Tarefa salva com sucesso!</p>
-      <form action="#" method="post">
+      <p id="mensagem" class="mensagem" role="status" hidden></p>
+      <form id="form-tarefa" action="#" method="post" novalidate>
         <div class="campo">
           <label for="titulo">Título</label>
           <input type="text" id="titulo" name="titulo" placeholder="Ex.: Entregar relatório" required>
@@ -60,15 +60,16 @@
           </select>
         </div>
         <div class="acoes">
-          <button type="submit">Salvar tarefa</button>
+          <button type="submit" id="btn-salvar">Salvar tarefa</button>
           <button type="reset">Limpar campos</button>
+          <button type="button" id="btn-cancelar" hidden>Cancelar edição</button>
         </div>
       </form>
     </section>
     <section id="quadro" aria-labelledby="titulo-quadro">
       <h2 id="titulo-quadro">Quadro de tarefas</h2>
 
-      <form class="barra" action="#" role="search" aria-label="Pesquisar, filtrar e ordenar tarefas">
+      <form class="barra" id="form-filtros" action="#" role="search" aria-label="Pesquisar, filtrar e ordenar tarefas">
         <div class="campo">
           <label for="busca">Pesquisar</label>
           <input type="search" id="busca" name="busca" placeholder="Buscar pelo título">
@@ -90,90 +91,46 @@
             <option value="titulo">Título (A–Z)</option>
           </select>
         </div>
-        <button type="button">Aplicar</button>
+        <button type="button" id="btn-aplicar">Aplicar</button>
       </form>
 
-      <div class="colunas">
+      <div class="colunas" id="colunas">
 
         <section aria-labelledby="col-fazer">
           <h3 id="col-fazer">A fazer</h3>
-          <article class="cartao">
-            <h4>Estudar para a prova de HTML</h4>
-            <ul>
-              <li>Prioridade: <strong class="prioridade prioridade--alta">Alta</strong></li>
-              <li>Prazo: <time datetime="2026-10-10">10/10/2026</time></li>
-            </ul>
-            <div class="acoes">
-              <button type="button">Ver detalhes</button>
-              <button type="button">Editar</button>
-              <button type="button">Excluir</button>
-            </div>
-          </article>
-          <article class="cartao">
-            <h4>Comprar material de estudo</h4>
-            <ul>
-              <li>Prioridade: <strong class="prioridade prioridade--baixa">Baixa</strong></li>
-              <li>Prazo: <time datetime="2026-10-15">15/10/2026</time></li>
-            </ul>
-            <div class="acoes">
-              <button type="button">Ver detalhes</button>
-              <button type="button">Editar</button>
-              <button type="button">Excluir</button>
-            </div>
-          </article>
+          <div id="lista-a-fazer"></div>
         </section>
 
         <section aria-labelledby="col-andamento">
           <h3 id="col-andamento">Em andamento</h3>
-          <article class="cartao">
-            <h4>Montar a estrutura do Task Flow</h4>
-            <ul>
-              <li>Prioridade: <strong class="prioridade prioridade--media">Média</strong></li>
-              <li>Prazo: <time datetime="2026-10-08">08/10/2026</time></li>
-            </ul>
-            <div class="acoes">
-              <button type="button">Ver detalhes</button>
-              <button type="button">Editar</button>
-              <button type="button">Excluir</button>
-            </div>
-          </article>
+          <div id="lista-em-andamento"></div>
         </section>
 
         <section aria-labelledby="col-concluida">
           <h3 id="col-concluida">Concluída</h3>
-          <article class="cartao">
-            <h4>Criar repositório no GitHub</h4>
-            <ul>
-              <li>Prioridade: <strong class="prioridade prioridade--media">Média</strong></li>
-              <li>Prazo: <time datetime="2026-10-03">03/10/2026</time></li>
-            </ul>
-            <div class="acoes">
-              <button type="button">Ver detalhes</button>
-              <button type="button">Editar</button>
-              <button type="button">Excluir</button>
-            </div>
-          </article>
+          <div id="lista-concluida"></div>
         </section>
 
       </div>
-      <p class="vazio">Nenhuma tarefa encontrada. Use o formulário para criar a primeira.</p>
-
     </section>
     <aside id="detalhes" aria-labelledby="titulo-detalhes">
       <h2 id="titulo-detalhes">Detalhes da tarefa</h2>
-      <table>
-        <caption>Tarefa selecionada (exemplo)</caption>
-        <tbody>
-          <tr><th scope="row">Título</th><td>Estudar para a prova de HTML</td></tr>
-          <tr><th scope="row">Descrição</th><td>Revisar tags semânticas, formulários e tabelas.</td></tr>
-          <tr><th scope="row">Prioridade</th><td>Alta</td></tr>
-          <tr><th scope="row">Prazo</th><td><time datetime="2026-10-10">10/10/2026</time></td></tr>
-          <tr><th scope="row">Status</th><td>A fazer</td></tr>
-        </tbody>
-      </table>
-      <div class="acoes">
-        <button type="button">Editar</button>
-        <button type="button">Excluir</button>
+      <p id="detalhes-vazio" class="vazio">Escolha uma tarefa e clique em "Ver detalhes" para ver as informações aqui.</p>
+      <div id="detalhes-conteudo" hidden>
+        <table>
+          <caption>Tarefa selecionada</caption>
+          <tbody>
+            <tr><th scope="row">Título</th><td id="det-titulo"></td></tr>
+            <tr><th scope="row">Descrição</th><td id="det-descricao"></td></tr>
+            <tr><th scope="row">Prioridade</th><td id="det-prioridade"></td></tr>
+            <tr><th scope="row">Prazo</th><td id="det-prazo"></td></tr>
+            <tr><th scope="row">Status</th><td id="det-status"></td></tr>
+          </tbody>
+        </table>
+        <div class="acoes">
+          <button type="button" id="det-editar">Editar</button>
+          <button type="button" id="det-excluir">Excluir</button>
+        </div>
       </div>
     </aside>
   </main>
