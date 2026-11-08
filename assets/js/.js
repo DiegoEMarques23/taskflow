@@ -162,3 +162,28 @@ function tratarEnvio(evento) {
 }
 
 form.addEventListener('submit', tratarEnvio);
+
+
+// ----- Persistência (localStorage) -----
+const CHAVE_STORAGE = 'taskflow:tarefas';
+
+function salvarTarefas() {
+  localStorage.setItem(CHAVE_STORAGE, JSON.stringify(tarefas));
+}
+
+function carregarTarefas() {
+  try {
+    const salvo = localStorage.getItem(CHAVE_STORAGE);
+    if (salvo !== null) {
+      const lista = JSON.parse(salvo);
+      if (Array.isArray(lista)) return lista;
+    }
+  } catch (erro) {
+    console.error('Não foi possível ler o localStorage:', erro);
+  }
+  return TAREFAS_INICIAIS.slice();
+}
+
+aoAlterarDados.push(salvarTarefas);
+tarefas = carregarTarefas();
+renderizar();
