@@ -235,3 +235,49 @@ document.getElementById('colunas').addEventListener('click', (evento) => {
 aoAlterarDados.push(() => {
   if (detalheId) mostrarDetalhes(detalheId);
 });
+
+
+// ----- Edição -----
+const botaoSalvar = document.getElementById('btn-salvar');
+const botaoCancelar = document.getElementById('btn-cancelar');
+const tituloCadastro = document.getElementById('titulo-cadastro');
+let editandoId = null;
+
+function iniciarEdicao(id) {
+  const tarefa = tarefas.find((item) => item.id === id);
+  if (!tarefa) return;
+  editandoId = id;
+  campoTitulo.value = tarefa.titulo;
+  campoDescricao.value = tarefa.descricao;
+  campoPrioridade.value = tarefa.prioridade;
+  campoPrazo.value = tarefa.prazo;
+  campoStatus.value = tarefa.status;
+
+  // Ao enviar, o formulário atualiza esta tarefa em vez de criar outra
+  acaoDoFormulario = (dados) => {
+    Object.assign(tarefa, dados);
+    return 'Tarefa atualizada com sucesso!';
+  };
+
+  tituloCadastro.textContent = 'Editar tarefa';
+  botaoSalvar.textContent = 'Salvar alterações';
+  botaoCancelar.hidden = false;
+  campoPrazo.dispatchEvent(new Event('change'));
+  document.getElementById('cadastro').scrollIntoView({ behavior: 'smooth' });
+  campoTitulo.focus();
+}
+
+function sairDaEdicao() {
+  editandoId = null;
+  acaoDoFormulario = criarTarefa;
+  tituloCadastro.textContent = 'Nova tarefa';
+  botaoSalvar.textContent = 'Salvar tarefa';
+  botaoCancelar.hidden = true;
+}
+
+form.addEventListener('reset', sairDaEdicao);
+botaoCancelar.addEventListener('click', () => form.reset());
+acoesDosCartoes.editar = iniciarEdicao;
+document.getElementById('det-editar').addEventListener('click', () => {
+  if (detalheId) iniciarEdicao(detalheId);
+});
