@@ -187,3 +187,51 @@ function carregarTarefas() {
 aoAlterarDados.push(salvarTarefas);
 tarefas = carregarTarefas();
 renderizar();
+
+
+// ----- Detalhes -----
+const detalhesVazio = document.getElementById('detalhes-vazio');
+const detalhesConteudo = document.getElementById('detalhes-conteudo');
+let detalheId = null;
+
+function limparDetalhes() {
+  detalheId = null;
+  detalhesConteudo.hidden = true;
+  detalhesVazio.hidden = false;
+}
+
+function mostrarDetalhes(id) {
+  const tarefa = tarefas.find((item) => item.id === id);
+  if (!tarefa) {
+    limparDetalhes();
+    return;
+  }
+  detalheId = id;
+  document.getElementById('det-titulo').textContent = tarefa.titulo;
+  document.getElementById('det-descricao').textContent = tarefa.descricao || 'Sem descrição';
+  document.getElementById('det-prioridade').textContent = PRIORIDADES[tarefa.prioridade];
+  document.getElementById('det-prazo').textContent = formatarData(tarefa.prazo);
+  document.getElementById('det-status').textContent = STATUS[tarefa.status];
+  detalhesVazio.hidden = true;
+  detalhesConteudo.hidden = false;
+}
+
+// Botões dos cartões: cada recurso registra a sua ação aqui (detalhes, editar, excluir)
+const acoesDosCartoes = {};
+
+acoesDosCartoes.detalhes = (id) => {
+  mostrarDetalhes(id);
+  document.getElementById('detalhes').scrollIntoView({ behavior: 'smooth' });
+};
+
+document.getElementById('colunas').addEventListener('click', (evento) => {
+  const botao = evento.target.closest('button[data-acao]');
+  if (!botao) return;
+  const acao = acoesDosCartoes[botao.dataset.acao];
+  if (acao) acao(botao.dataset.id);
+});
+
+// Mantém o painel de detalhes atualizado quando os dados mudam (edição ou exclusão)
+aoAlterarDados.push(() => {
+  if (detalheId) mostrarDetalhes(detalheId);
+});
