@@ -330,3 +330,29 @@ etapasDaLista.push((lista) => {
 });
 
 campoFiltro.addEventListener('change', renderizar);
+
+
+// ----- Ordenação -----
+const campoOrdem = document.getElementById('ordem');
+
+function compararTarefas(criterio) {
+  if (criterio === 'titulo') {
+    return (a, b) => a.titulo.localeCompare(b.titulo, 'pt-BR');
+  }
+  if (criterio === 'prioridade') {
+    return (a, b) => PESO_PRIORIDADE[a.prioridade] - PESO_PRIORIDADE[b.prioridade];
+  }
+  // prazo: tarefas sem prazo vão para o fim
+  return (a, b) => {
+    if (!a.prazo && !b.prazo) return 0;
+    if (!a.prazo) return 1;
+    if (!b.prazo) return -1;
+    return a.prazo.localeCompare(b.prazo);
+  };
+}
+
+// A ordenação é a última etapa da lista
+etapasDaLista.push((lista) => lista.sort(compararTarefas(campoOrdem.value)));
+
+campoOrdem.addEventListener('change', renderizar);
+renderizar();
