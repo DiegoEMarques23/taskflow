@@ -318,3 +318,15 @@ etapasDaLista.push((lista) => {
 campoBusca.addEventListener('input', renderizar);
 formFiltros.addEventListener('submit', (evento) => evento.preventDefault());
 document.getElementById('btn-aplicar').addEventListener('click', renderizar);
+
+
+// ----- Filtro por prioridade -----
+const campoFiltro = document.getElementById('filtro');
+
+etapasDaLista.push((lista) => {
+  const prioridade = campoFiltro.value;
+  if (prioridade === '') return lista;
+  return lista.filter((tarefa) => tarefa.prioridade === prioridade);
+});
+
+campoFiltro.addEventListener('change', renderizar);
