@@ -299,3 +299,22 @@ acoesDosCartoes.excluir = excluirTarefa;
 document.getElementById('det-excluir').addEventListener('click', () => {
   if (detalheId) excluirTarefa(detalheId);
 });
+
+
+// ----- Pesquisa -----
+const formFiltros = document.getElementById('form-filtros');
+const campoBusca = document.getElementById('busca');
+
+// Ignora maiúsculas e acentos ("agua" encontra "Água")
+function normalizar(texto) {
+  return texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+etapasDaLista.push((lista) => {
+  const termo = normalizar(campoBusca.value.trim());
+  return lista.filter((tarefa) => normalizar(tarefa.titulo).includes(termo));
+});
+
+campoBusca.addEventListener('input', renderizar);
+formFiltros.addEventListener('submit', (evento) => evento.preventDefault());
+document.getElementById('btn-aplicar').addEventListener('click', renderizar);
