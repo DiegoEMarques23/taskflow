@@ -356,3 +356,86 @@ etapasDaLista.push((lista) => lista.sort(compararTarefas(campoOrdem.value)));
 
 campoOrdem.addEventListener('change', renderizar);
 renderizar();
+
+// ----- API pública: feriados nacionais (BrasilAPI) -----
+const URL_FERIADOS = 'https://brasilapi.com.br/api/feriados/v1/';
+const listaFeriados = document.getElementById('lista-feriados');
+const estadoFeriados = document.getElementById('feriados-estado');
+const botaoRecarregar = document.getElementById('btn-recarregar-feriados');
+const avisoPrazo = document.getElementById('aviso-prazo');
+let feriados = [];
+
+// Avisa quando o prazo escolhido no formulário cai em um feriado
+function atualizarAvisoPrazo() {
+  const feriado = feriados.find((item) => item.date === campoPrazo.value);
+  if (feriado) {
+    avisoPrazo.textContent = `Atenção: ${formatarData(feriado.date)} é feriado (${feriado.name}).`;
+    avisoPrazo.hidden = false;
+  } else {
+    avisoPrazo.hidden = true;
+  }
+}
+
+function renderizarFeriados() {
+  listaFeriados.replaceChildren();
+  feriados.forEach((feriado) => {
+    const item = document.createElement('li');
+
+    const texto = document.createElement('div');
+    const nome = document.createElement('strong');
+    nome.textContent = feriado.name;
+    const data = document.createElement('div');
+    data.className = 'data';
+    data.textContent = formatarData(feriado.date);
+    texto.append(nome, data);
+
+    const botao = document.createElement('button');
+    botao.type = 'button';
+    botao.dataset.data = feriado.date;
+    botao.dataset.nome = feriado.name;
+    botao.textContent = 'Criar tarefa';
+
+    item.append(texto, botao);
+    listaFeriados.append(item);
+  });
+}
+
+async function carregarFeriados() {
+  estadoFeriados.textContent = 'Carregando feriados...';
+  estadoFeriados.className = 'mensagem mensagem--info';
+  estadoFeriados.hidden = false;
+  botaoRecarregar.hidden = true;
+  try {
+    const resposta = await fetch(URL_FERIADOS + new Date().getFullYear());
+    if (!resposta.ok) throw new Error(`Erro ${resposta.status}`);
+    feriados = await resposta.json();
+    renderizarFeriados();
+    estadoFeriados.hidden = true;
+    atualizarAvisoPrazo();
+  } catch (erro) {
+    console.error('Falha ao carregar feriados:', erro);
+    estadoFeriados.textContent = 'Não foi possível carregar os feriados agora. Verifique a conexão e tente novamente.';
+    estadoFeriados.className = 'mensagem mensagem--erro';
+    botaoRecarregar.hidden = false;
+  }
+}
+
+// Escolher um feriado preenche o formulário de cadastro com os dados da API
+listaFeriados.addEventListener('click', (evento) => {
+  const botao = evento.target.closest('button[data-data]');
+  if (!botao) return;
+  form.reset();
+  campoTitulo.value = `Planejar atividades: ${botao.dataset.nome}`;
+  campoPrazo.value = botao.dataset.data;
+  campoPrazo.dispatchEvent(new Event('change'));
+  document.getElementById('cadastro').scrollIntoView({ behavior: 'smooth' });
+  campoTitulo.focus();
+});
+
+campoPrazo.addEventListener('change', atualizarAvisoPrazo);
+form.addEventListener('reset', () => {
+  avisoPrazo.hidden = true;
+});
+botaoRecarregar.addEventListener('click', carregarFeriados);
+
+carregarFeriados();

@@ -51,6 +51,7 @@
           <label for="prazo">Prazo</label>
           <input type="date" id="prazo" name="prazo">
         </div>
+        <p id="aviso-prazo" class="mensagem mensagem--info" role="status" hidden></p>
         <div class="campo">
           <label for="status">Status</label>
           <select id="status" name="status">
@@ -133,6 +134,13 @@
         </div>
       </div>
     </aside>
+    <section id="feriados" aria-labelledby="titulo-feriados">
+      <h2 id="titulo-feriados">Feriados nacionais</h2>
+      <p>Consulte os feriados do ano para planejar seus prazos. Escolha um feriado para criar uma tarefa com essa data.</p>
+      <p id="feriados-estado" class="mensagem mensagem--info" role="status">Carregando feriados...</p>
+      <ul id="lista-feriados" class="feriados"></ul>
+      <button type="button" id="btn-recarregar-feriados" hidden>Tentar novamente</button>
+    </section>
   </main>
   <footer>
     <p>Task Flow — Gerenciador de tarefas</p>
